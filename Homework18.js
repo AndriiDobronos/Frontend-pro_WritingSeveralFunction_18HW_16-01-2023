@@ -5,19 +5,21 @@
 //Дано масив з елементами різних типів. Створити функцію яка
 //вираховує середнє арифметичне лише числових елементів даного масиву.
 
-const arr = [5,"hello","world",75,32,41,"func45",4,"number10"," ","5"]
+const arrTest = [5,"hello","world",75,32,41,"func45",4,"number10"," ","5"]
 function arithmeticMean(array) {
-    let n = 0
-    let arithmeticMeanNum = 0
-    for (let i = 0; i < array.length ; i++) {
-        if (!isNaN(+(array[i])) === true) {
-            arithmeticMeanNum = arithmeticMeanNum + Number(array[i])
-            n++
+    const previousArr = []
+    const arithmeticMeanNumArr = array.reduce(function (previousArr,currentItem) {
+        if (!isNaN(currentItem)) {
+            previousArr.push(Number(currentItem))
         }
-    }
-return arithmeticMeanNum / (n - 1)
+        return previousArr
+    },previousArr)
+    const sumArithmeticMean = arithmeticMeanNumArr.reduce(function(previousValue,currentValue) {
+        return previousValue + currentValue
+    })
+    return sumArithmeticMean / arithmeticMeanNumArr.length
 }
-alert(arithmeticMean(arr))
+alert(arithmeticMean(arrTest))
 /**********************************************************/
 
 //Написати функцію doMath(x, znak, y), яка отримує 3 аргументи:
@@ -26,35 +28,35 @@ alert(arithmeticMean(arr))
 //дії, вказаної в змінній znak.Обидва числа і знак виходять від користувача.
 
 const firstNumber = prompt(`Enter first number :`)
-const action = prompt(`Enter an action +, -, *, /, %, ^:`)
+const action = prompt(`Enter an action +, -, *, /, %, ^(ступінь):`)
 const secondNumber = prompt(`Enter second number :`)
 
 function doMatch(x,znak,y) {
-    if (x === null || x.trim() === "" || isNaN(+x) === true) {
+    if (x === null || x.trim() === "" || isNaN(+x) ) {
         return "first number is incorrect"
     }
-    else if (y === null || y.trim() === "" || isNaN(+y) === true) {
+    else if (y === null || y.trim() === "" || isNaN(+y)) {
         return "second number is incorrect"
     }
     let result
-    switch (true){
-        case znak === "+" :
+    switch (znak){
+        case  "+" :
             result = (+x) + (+y)
             break;
-        case znak === "-" :
+        case "-" :
             result = (+x) - (+y)
             break;
-        case znak === "*" :
+        case "*" :
             result = (+x) * (+y)
             break;
-        case znak === "/" :
+        case "/" :
             result = (+x) / (+y)
             break;
-        case znak === "%" :
+        case "%" :
             result = (+x) % (+y)
             break;
-        case znak === "^" :
-            result = (+x) ^ (+y)
+        case "^" :
+            result = (+x) ** (+y)
             break;
         default :
             result = "znak is incorrect symbol"
@@ -73,7 +75,7 @@ alert(doMatch(firstNumber,action,secondNumber))
 
 function lengthOuterArray() {
     let lengthOuterArr = Number(prompt(`Input length outer array for example "5"`))
-    if (lengthOuterArr <= 0 || isNaN(lengthOuterArr) ) {
+    while (lengthOuterArr <= 0 || isNaN(lengthOuterArr) ) {
         lengthOuterArr = Number(prompt(`You inputted incorrect number length outer array`))
     }
     return lengthOuterArr
@@ -83,8 +85,12 @@ const lengthOuterArr = Number(lengthOuterArray())
 function lengthInternalArr(lengthOuterArr) {
     let lengthInternalArr1 = (prompt(`Input number length internal
            arrays separated by a "," for example [3,4,2,5,7]`)).split(",")
-    alert(lengthInternalArr1.length)
-    if (lengthInternalArr1.length !== lengthOuterArr) {
+    let testSum = null
+    for (let l = 0; l < lengthInternalArr1.length; l++) {
+        testSum = testSum + +lengthInternalArr1[l]
+    }
+    while (lengthInternalArr1.length !== lengthOuterArr ||
+    isNaN(testSum)) {
         lengthInternalArr1 = (prompt(`You inputted incorrect number length internal arrays repeat please`)).split(",")
     }
     return lengthInternalArr1
@@ -99,7 +105,7 @@ for (let i = 0; i < lengthOuterArr ; i++) {
 function userArray (sumLengthInternalArr) {
     let userArray1 = (prompt(`Input elements for 2DArray separated by a ","
     for example : ['y','e','s',1,2,3,4,'n','o',5,5,5,5,5,'f','i','n','i','s','h',0]`)).split(',')
-    if ( userArray1.length !== sumLengthInternalArr) {
+    while ( userArray1.length !== sumLengthInternalArr) {
         userArray1 = (prompt(`You inputted incorrect number elements,repeat please`)).split(",")
     }
     return userArray1
