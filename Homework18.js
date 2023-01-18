@@ -5,21 +5,21 @@
 //Дано масив з елементами різних типів. Створити функцію яка
 //вираховує середнє арифметичне лише числових елементів даного масиву.
 
-const arrTest = [5,"hello","world",75,32,41,"func45",4,"number10"," ","5"]
+const arrTest = [5,"hello","world",75,32,41,"","func45",4,null,0,"number10"," ","5"]
 function arithmeticMean(array) {
-    const previousArr = []
-    const arithmeticMeanNumArr = array.reduce(function (previousArr,currentItem) {
-        if (!isNaN(currentItem)) {
-            previousArr.push(Number(currentItem))
-        }
-        return previousArr
-    },previousArr)
-    const sumArithmeticMean = arithmeticMeanNumArr.reduce(function(previousValue,currentValue) {
-        return previousValue + currentValue
-    })
-    return sumArithmeticMean / arithmeticMeanNumArr.length
+    let sumArithmeticMean = 0
+    const arithmeticMeanNumArr = []
+   for(let d = 0; d < array.length ; d++) {
+       if (!isNaN(array[d]) && array[d] !== " " && array[d] !== null && array[d] !== "") {
+// не пацює if (!(!array[d]?.trim())) {
+           sumArithmeticMean = sumArithmeticMean + +array[d]
+           arithmeticMeanNumArr.push(array[d])
+       }
+   }
+   return sumArithmeticMean / arithmeticMeanNumArr.length
 }
 alert(arithmeticMean(arrTest))
+
 /**********************************************************/
 
 //Написати функцію doMath(x, znak, y), яка отримує 3 аргументи:
