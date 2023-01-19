@@ -5,13 +5,14 @@
 //Дано масив з елементами різних типів. Створити функцію яка
 //вираховує середнє арифметичне лише числових елементів даного масиву.
 
-const arrTest = [5,"hello","world",75,32,41,"","func45",4,null,0,"number10"," ","5"]
+const arrTest = [5,"hello","world",undefined,75,32,41,"","func45",4,null,0,"number10"," ","5"]
 function arithmeticMean(array) {
     let sumArithmeticMean = 0
     const arithmeticMeanNumArr = []
    for(let d = 0; d < array.length ; d++) {
-       if (!isNaN(array[d]) && array[d] !== " " && array[d] !== null && array[d] !== "") {
-// не пацює if (!(!array[d]?.trim())) {
+       let isValid = array.every(el => Number(array[d]) || array[d] === 0)
+       if (isValid) {
+//       if (!isNaN(array[d]) && array[d] !== " " && array[d] !== null && array[d] !== "") {
            sumArithmeticMean = sumArithmeticMean + +array[d]
            arithmeticMeanNumArr.push(array[d])
        }
@@ -19,7 +20,6 @@ function arithmeticMean(array) {
    return sumArithmeticMean / arithmeticMeanNumArr.length
 }
 alert(arithmeticMean(arrTest))
-
 /**********************************************************/
 
 //Написати функцію doMath(x, znak, y), яка отримує 3 аргументи:
@@ -69,10 +69,6 @@ alert(doMatch(firstNumber,action,secondNumber))
 // Довжину основного масиву і внутрішніх масивів задає користувач.
 // Значення всіх елементів всіх масивів задає користувач.
 
-//const lengthOuterArr = 5
-//const sourceArr = [3,4,2,5,7]
-//const userArrayS = ['y','e','s',1,2,3,4,'n','o',5,5,5,5,5,'f','i','n','i','s','h',0]
-
 function lengthOuterArray() {
     let lengthOuterArr = Number(prompt(`Input length outer array for example "5"`))
     while (lengthOuterArr <= 0 || isNaN(lengthOuterArr) ) {
@@ -80,53 +76,27 @@ function lengthOuterArray() {
     }
     return lengthOuterArr
 }
-
 const lengthOuterArr = Number(lengthOuterArray())
-function lengthInternalArr(lengthOuterArr) {
-    let lengthInternalArr1 = (prompt(`Input number length internal
-           arrays separated by a "," for example [3,4,2,5,7]`)).split(",")
-    let testSum = null
-    for (let l = 0; l < lengthInternalArr1.length; l++) {
-        testSum = testSum + +lengthInternalArr1[l]
-    }
-    while (lengthInternalArr1.length !== lengthOuterArr ||
-    isNaN(testSum)) {
-        lengthInternalArr1 = (prompt(`You inputted incorrect number length internal arrays repeat please`)).split(",")
-    }
-    return lengthInternalArr1
-}
 
-const sourceArr = lengthInternalArr(lengthOuterArr)
-let sumLengthInternalArr = 0
-for (let i = 0; i < lengthOuterArr ; i++) {
-    sumLengthInternalArr = sumLengthInternalArr + Number(sourceArr[i])
-}
-
-function userArray (sumLengthInternalArr) {
-    let userArray1 = (prompt(`Input elements for 2DArray separated by a ","
-    for example : ['y','e','s',1,2,3,4,'n','o',5,5,5,5,5,'f','i','n','i','s','h',0]`)).split(',')
-    while ( userArray1.length !== sumLengthInternalArr) {
-        userArray1 = (prompt(`You inputted incorrect number elements,repeat please`)).split(",")
-    }
-    return userArray1
-}
-
-let userArrayS = userArray(sumLengthInternalArr)
-function fill2DArray(length, value,lengthInternalArr) {
-    const OuterArr = []
-    for (let i = 0, k = 0; i < length; i++) {
-        const subArr = []
-        for(let j = 0; j < +lengthInternalArr[i] ; j++) {
-            subArr.push(value[j + k])
+function sumInternalArrays (lengthOuterArr) {
+    const outerArray = []
+    for (let h = 1; h <= lengthOuterArr ; h++ ) {
+        const internalArr = []
+        internalArr[h] = prompt(`Input elements for  internal
+        arrays ${h} separated by a "," for example: 3,4,2,5,7`)
+        if (internalArr[h] !== null && internalArr[h].length > 0) {
+            outerArray.push((internalArr[h]).split(","))
         }
-        OuterArr.push(subArr)
-        k = k + +lengthInternalArr[i]
+        else {
+            return alert(`You haven't inputted anything`)
+        }
     }
-    return OuterArr
+    return outerArray
 }
+const result = sumInternalArrays (lengthOuterArr)
+alert(result)
+console.log(result)
 
-console.log(fill2DArray(lengthOuterArr,userArrayS,sourceArr))
-//alert(fill2DArray(lengthOuterArr,userArrayS,sourceArr))
 /***********************************************************************/
 //Створити функцію, яка прибирає з рядка всі символи,
 // які ми передали другим аргументом. 'func(" hello world", ['l', 'd'])'
